@@ -73,10 +73,17 @@ class Author:
 
 
 class Magazine:
+    all = []
     
     def __init__(self, name, category):
         self.name = name
         self.category = category
+        Magazine.add_new_magazine(self)
+        
+       
+    @classmethod
+    def add_new_magazine(cls, new_magazine):
+        cls.all.append(new_magazine)
  
     @property
     def name(self):
@@ -116,3 +123,14 @@ class Magazine:
             return None
         else:
             return contributing_authors
+        
+    @classmethod
+    def total_for_specific_magazine(cls,magazine):
+        return len(magazine.articles())
+    
+    @classmethod
+    def top_publisher(cls):
+        if len(Article.all) == 0:
+            return None
+        else: 
+            return max(cls.all, key=lambda magazine: magazine.total_for_specific_magazine(magazine))
